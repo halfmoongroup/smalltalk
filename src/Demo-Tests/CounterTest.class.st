@@ -12,7 +12,6 @@ CounterTest >> testCounterIncrements [
 	| myCounter retValue | 
 	
 	myCounter := Counter new.
-	myCounter count: 0.
 	retValue := myCounter increment.
 	self assert: retValue equals: 1.
 ]
