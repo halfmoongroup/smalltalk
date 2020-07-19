@@ -10,7 +10,7 @@ Class {
 		'yearPublished',
 		'condition'
 	],
-	#category : #Demo
+	#category : #'Demo-Java'
 }
 
 { #category : #initialization }
