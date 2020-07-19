@@ -13,6 +13,15 @@ Class {
 	#category : #Demo
 }
 
+{ #category : #initialization }
+Book class >> initializeWithDictionary: aDict withAuthor: anAuthor [
+	| newBook |
+	newBook := self  new. 
+	newBook author: anAuthor; title: (aDict at:'full_title' ); yearPublished: (aDict at: 'publish_date').
+	^newBook
+	
+]
+
 { #category : #accessing }
 Book >> author [
 	^ author
@@ -31,6 +40,15 @@ Book >> condition [
 { #category : #accessing }
 Book >> condition: anObject [
 	condition := anObject
+]
+
+{ #category : #initialization }
+Book >> initialize [ 
+
+	self author: ''; 
+		condition: 'new'; 
+		title: ''; 
+		yearPublished: 1900.
 ]
 
 { #category : #accessing }
