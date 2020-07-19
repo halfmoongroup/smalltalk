@@ -3,13 +3,14 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'authorName',
-		'authorKey'
+		'authorKey',
+		'books'
 	],
 	#category : #OpenLibrary
 }
 
 { #category : #'as yet unclassified' }
-OLAuthor class >> publicKeyForAuthor: anAuthor [
+OLAuthor class >> populateAuthor: anAuthor [
 |response data  author doc |
 	response := ZnClient new url: ('http://openlibrary.org/search.json?author=',anAuthor ); get; response.
 	data := NeoJSONReader fromString: response contents asString.
@@ -39,4 +40,20 @@ OLAuthor >> authorName [
 { #category : #accessing }
 OLAuthor >> authorName: anObject [
 	authorName := anObject
+]
+
+{ #category : #accessing }
+OLAuthor >> books [
+	^ books
+]
+
+{ #category : #accessing }
+OLAuthor >> books: anObject [
+	books := anObject
+]
+
+{ #category : #initialization }
+OLAuthor >> initialize [ 
+
+	books := OrderedCollection  new. 
 ]

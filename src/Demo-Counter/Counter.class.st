@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'count'
 	],
-	#category : #Demo
+	#category : #'Demo-Counter'
 }
 
 { #category : #accessing }
