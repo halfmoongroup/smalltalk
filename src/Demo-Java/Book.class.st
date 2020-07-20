@@ -8,7 +8,8 @@ Class {
 		'title',
 		'author',
 		'yearPublished',
-		'condition'
+		'condition',
+		'publisher'
 	],
 	#category : #'Demo-Java'
 }
@@ -49,6 +50,24 @@ Book >> initialize [
 		condition: 'new'; 
 		title: ''; 
 		yearPublished: 1900.
+]
+
+{ #category : #accessing }
+Book >> publisher [
+	^ publisher
+]
+
+{ #category : #accessing }
+Book >> publisher: anObject [
+	publisher := anObject
+]
+
+{ #category : #infos }
+Book >> showInfo [ 
+
+	| tmp |
+	tmp := super showInfo.
+	^ tmp, ' : ', self title
 ]
 
 { #category : #accessing }

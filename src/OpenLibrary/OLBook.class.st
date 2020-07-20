@@ -1,3 +1,6 @@
+"
+our simple representation of a book, using fields from openlibrary.org
+"
 Class {
 	#name : #OLBook,
 	#superclass : #Object,

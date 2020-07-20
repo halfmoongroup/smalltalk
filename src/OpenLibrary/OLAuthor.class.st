@@ -1,10 +1,12 @@
+"
+A fascade for keeping a basic author_id and name
+"
 Class {
 	#name : #OLAuthor,
 	#superclass : #Object,
 	#instVars : [
 		'authorName',
-		'authorKey',
-		'books'
+		'authorKey'
 	],
 	#category : #OpenLibrary
 }
@@ -42,18 +44,8 @@ OLAuthor >> authorName: anObject [
 	authorName := anObject
 ]
 
-{ #category : #accessing }
-OLAuthor >> books [
-	^ books
-]
-
-{ #category : #accessing }
-OLAuthor >> books: anObject [
-	books := anObject
-]
-
 { #category : #initialization }
 OLAuthor >> initialize [ 
 
-	books := OrderedCollection  new. 
+	
 ]
