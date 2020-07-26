@@ -11,22 +11,24 @@ Class {
 BookTest class >> bookJson [
 
 ^ '{
-	"author" : "Name",
-	"bookId" : "abcd1234",
-	"published" : 2020,
-	"publisher" : "aPublisher",
-	"title" : "The Book Title"
+	"author" : "name",
+	"bookId" : "55",
+	"title" : "The Book Title",
+	"originalPublicationYear" : 2020,
+	"imageUrl" : "http://localhost/image.jpg",
+	"smallImageUrl" : "http://localhost/sm_image.jpg"
 }'
 ]
 
 { #category : #running }
 BookTest >> setUp [ 
 
-	book := Book new author: 'Name';
-				publisher: 'aPublisher';
-				bookId: 'abcd1234';
+	book := Book new author: 'name';
+				bookId: '55';
 				title: 'The Book Title';
-				originalPublicationYear: 2020.
+				originalPublicationYear: 2020;
+				smallImageUrl: 'http://localhost/sm_image.jpg';
+				imageUrl: 'http://localhost/image.jpg'.
 ]
 
 { #category : #tests }

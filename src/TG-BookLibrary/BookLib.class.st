@@ -267,11 +267,11 @@ BookLib >> initialize [
 ]
 
 { #category : #initialization }
-BookLib >> initialize: aClient [
+BookLib >> initialize: hostname [
 	"comment stating purpose of instance-side message"
 	"scope: class-variables  &  instance-variables"	
 	self initialize.
-	client := aClient.
+	client := BookLibraryClient new initialize: hostname .
 	
 	 
 	
