@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'author',
 		'bookId',
-		'publisher',
 		'title',
 		'originalPublicationYear',
 		'imageUrl',
@@ -32,7 +31,6 @@ Book class >> randomize: randomStringBlock [
 	 ^ book author: (randomStringBlock value: 8),' ', (randomStringBlock value: 10);
 	    title: (randomStringBlock value: 14);
 		 bookId: (randomStringBlock value: 14);
-		 publisher: (randomStringBlock value: 14);
 		originalPublicationYear: (1950 to: 2020) atRandom.
 ]
 
@@ -84,16 +82,6 @@ Book >> originalPublicationYear [
 { #category : #accessing }
 Book >> originalPublicationYear: anObject [
 	originalPublicationYear := anObject
-]
-
-{ #category : #accessing }
-Book >> publisher [
-	^ publisher
-]
-
-{ #category : #accessing }
-Book >> publisher: anObject [
-	publisher := anObject
 ]
 
 { #category : #accessing }

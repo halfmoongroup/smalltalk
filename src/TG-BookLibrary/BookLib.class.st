@@ -221,6 +221,14 @@ BookLib class >> openAPIString [
 }'
 ]
 
+{ #category : #adding }
+BookLib >> addBook: aBook [
+	aBook bookId ifNil: [ 
+			aBook bookId: (self books size). 
+			self books add: aBook].
+	client operationWithId: 'putBook' arguments: nil body: aBook toJson .
+]
+
 { #category : #accessing }
 BookLib >> books [
 	^ books
@@ -229,6 +237,13 @@ BookLib >> books [
 { #category : #accessing }
 BookLib >> books: aList [
 	books := aList
+]
+
+{ #category : #accessing }
+BookLib >> cache: aBook [
+
+	self books detect: [ :each | aBook bookId = each bookId ]  
+		ifNone: [ self addBook: aBook ]
 ]
 
 { #category : #accessing }
@@ -267,14 +282,35 @@ BookLib >> initialize [
 ]
 
 { #category : #initialization }
-BookLib >> initialize: hostname [
-	"comment stating purpose of instance-side message"
-	"scope: class-variables  &  instance-variables"	
+BookLib >> initializeWithClient: aClient [
 	self initialize.
-	client := BookLibraryClient new initialize: hostname .
+	client := aClient  .
 	
 	 
 	
+]
+
+{ #category : #initialization }
+BookLib >> initializeWithUrl: url [
+	"comment stating purpose of instance-side message"
+	"scope: class-variables  &  instance-variables"	
+	self initialize.
+	client := BookLibraryClient new initializeWithUrl: url .
+	
+	 
+	
+]
+
+{ #category : #testing }
+BookLib >> isInCache: aBook [
+
+	^self books contains: [ :each | aBook bookId = each bookId ]
+]
+
+{ #category : #testing }
+BookLib >> isValidForSave: aBook [
+
+	^(aBook notNil) and: (aBook author notNil); and:(aBook title  notNil)
 ]
 
 { #category : #accessing }
@@ -295,4 +331,17 @@ BookLib >> pageSize [
 { #category : #accessing }
 BookLib >> pageSize: anInt [
 	pageSize := anInt
+]
+
+{ #category : #removing }
+BookLib >> removeBook: aBook [
+	self books remove: aBook. 
+	
+]
+
+{ #category : #'accessing - data' }
+BookLib >> saveBook: aBook [
+	
+	self cache: aBook. 
+	
 ]

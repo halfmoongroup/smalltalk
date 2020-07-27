@@ -15,7 +15,7 @@ BookLibraryClient class >> openAPIString [
   "openapi": "3.0.1",
   "info": {
     "title": "Book Library",
-    "description": "This is a sample booklibrary server.",
+    "description": "This is a sample booklibrary search service.",
     "version": "1.0.0"
   },
   "servers": [
@@ -26,13 +26,13 @@ BookLibraryClient class >> openAPIString [
   "tags": [
     {
       "name": "Book Library Resources",
-      "description": "search books"
-    },
-    {
-      "name": "Book Search"
+      "description": "manage books"
     },
     {
       "name": "Book Management"
+    },
+    {
+      "name": "Book Search"
     }
   ],
   "paths": {
@@ -93,6 +93,102 @@ BookLibraryClient class >> openAPIString [
           "Book Management"
         ],
         "operationId": "getBook",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get a book instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid book id supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Book not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Book Management"
+        ],
+        "operationId": "resetBsook",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get a book instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid book id supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Book not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Book Management"
+        ],
+        "operationId": "deleteBook",
         "parameters": [
           {
             "name": "id",
@@ -298,20 +394,43 @@ BookLibraryClient >> client: anObject [
 	client := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #api }
 BookLibraryClient >> fetchRawBookList [
 
 	^client operationWithId: 'getBooks' arguments: nil body: nil.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #api }
 BookLibraryClient >> fetchRawBookWithId: anId [
 	^client operationWithId: 'getBook' arguments: {#id -> anId} body: nil.
 ]
 
 { #category : #initialization }
-BookLibraryClient >> initialize: aURL [
+BookLibraryClient >> initializeWithClient: aClient [
+	client := aClient
+]
+
+{ #category : #initialization }
+BookLibraryClient >> initializeWithUrl: aURL [
 
 	api := OpenAPI readFrom: (self class openAPIString)  readStream.
 	client := OpenApiClient new baseUri: aURL; openApi: api
+]
+
+{ #category : #api }
+BookLibraryClient >> putBook: aBook [ 
+
+	 ^client operationWithId: 'putBook' arguments: nil body: (aBook toJson).
+]
+
+{ #category : #api }
+BookLibraryClient >> removeBook: aBookId [
+
+	^client operationWithId: 'deleteBook' arguments: {#id -> aBookId}  body: nil.
+]
+
+{ #category : #api }
+BookLibraryClient >> resetBook: aBook [
+
+	^client operationWithId: 'resetBook' arguments: {#id -> (aBook bookId)} body: nil.
 ]

@@ -23,7 +23,7 @@ BookLibTest >> setUp [
 	super setUp.
 	client := BookTestClient new. 
 	client initialize.
-	bookLibrary := BookLib new initialize: client. 
+	bookLibrary := BookLib new initializeWithClient: client. 
 	
 	
 
@@ -33,6 +33,29 @@ BookLibTest >> setUp [
 BookLibTest >> testFetchAList [
 	self bookLibrary fetchList.
 	self assert: (self bookLibrary books) isNotEmpty.
+]
+
+{ #category : #tests }
+BookLibTest >> testIsInCache [
+
+	| book|
+	
+	self bookLibrary fetchList. 
+	book :=  self bookLibrary books at: 1. 
+	self assert: (bookLibrary isInCache: book).
+	book := BookTestClient randomBook.
+	self assert: (bookLibrary isInCache: book) equals: false
+]
+
+{ #category : #tests }
+BookLibTest >> testIsValidForSave [
+		|book |
+		book := Book new. 
+		self assert: (bookLibrary isValidForSave: book) equals: false. 
+		book author: 'Bob'.
+		self assert: (bookLibrary isValidForSave: book) equals: false. 
+		book title: 'a title'.
+		self assert: (bookLibrary isValidForSave: book). 
 ]
 
 { #category : #tests }
