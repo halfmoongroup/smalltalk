@@ -336,7 +336,7 @@ BookLib >> pageSize: anInt [
 { #category : #removing }
 BookLib >> removeBook: aBook [
 	self books remove: aBook. 
-	
+	self client removeBook: aBook. 
 ]
 
 { #category : #'accessing - data' }
